@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var engine = require('ejs-mate');
+var validator = require('express-validator');
 
 /*
 * Database connectivity with mongoose -- START
@@ -50,6 +51,47 @@ app.use(session({
 
 /*
 * Session storage in DB -- END
+*/
+
+
+/*
+* Express Validator - Error Formatter Middleware - START
+*(the formParam value is going to get morphed into form body format useful for printing.)
+*/
+
+app.use(validator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
+
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  },
+  customValidators: {
+    isExist : function(username){
+      User.findOne({username:username},(err,user)=>{
+          if(err) throw err;
+          if(user){
+            return true;
+          }else{
+            return false;
+          }
+    
+      });
+    }  
+ }
+}));
+
+
+/*
+* Express Validator - Error Formatter Middleware - END
 */
 
 // uncomment after placing your favicon in /public
