@@ -1,0 +1,89 @@
+<% layout('layout/layout') %>
+
+
+    <div class="container profile">
+
+      <div class="row bio py-3">
+          <div class="col-5 ">
+              <img src="https://unsplash.it/200/200" alt="" class="img-fluid">
+          </div>
+          <div class="col-7 details">
+            <span>Ashish Mehra</span>
+            <span class="username">@ashish_D_Dev</span>
+            <p class="lead mt-2">Vestibulum auctor dapibus neque.</p>
+            <table class="mb-2">
+              <tr>
+                <td><b>121</b></td>
+                <td><b>1020</b></td>
+              </tr>
+              <tr>
+                <td>followers</td>
+                <td>following</td>
+              </tr>
+            </table>
+            <button class="btn-msg"><i class="fa fa-envelope"></i></button>
+            <button class="btn-follow"><i class="fa fa-user-plus"></i> Follow</button>
+          </div>
+      </div>
+
+      <div class="row t-header py-2">
+          <span class="mx-3 mr-auto"><i class="fa fa-clone mr-1"></i> <b>22</b> posts</span>
+          <span class="mr-5 total-likes"><i class="fa fa-thumbs-o-up mr-1"></i> <b>200</b> liked</span>
+      </div>
+
+      <div class="row mb-3 profile-posts">
+          <div class="post-thumbnail col-4">
+              <a href="#">
+                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
+              </a>
+          </div>
+          <div class="post-thumbnail col-4">
+              <a href="#">
+                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
+              </a>
+          </div>
+          <div class="post-thumbnail col-4">
+              <a href="#">
+                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
+              </a>
+          </div>
+          <div class="post-thumbnail col-4">
+              <a href="#">
+                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
+              </a>
+          </div>
+          <div class="post-thumbnail col-4">
+              <a href="#">
+                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
+              </a>
+          </div>
+          <div class="post-thumbnail col-4">
+              <a href="#">
+                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
+              </a>
+          </div>
+          <div class="post-thumbnail col-4">
+              <a href="#">
+                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
+              </a>
+          </div>
+          <div class="post-thumbnail col-4">
+              <a href="#">
+                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
+              </a>
+          </div>
+          <div class="post-thumbnail col-4">
+              <a href="#">
+                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
+              </a>
+          </div>
+          <!-- Load More Button -->
+          <div class="col-6 mx-auto my-4">
+              <button class="btn-load">Loading <i class="fa fa-spinner"></i></button>
+          </div>
+      </div>
+
+    </div>
+
+   <!-- Panels  -->
+      <% include partials/panels/panel %>

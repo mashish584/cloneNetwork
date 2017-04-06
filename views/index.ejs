@@ -1,0 +1,64 @@
+<% layout('layout/layout') %>
+
+<div class="container user-form py-5">
+        <span class="site-logo my-3">Community Network</span>
+        <p class="lead my-1">Join the community now and share your photos and stories.</p>
+
+        <div class="row">
+          <div class="col-12 col-lg-4 offset-lg-2">
+              <form class="my-5">
+                  <div class="form-group">
+                    <input type="text" name="email" value="" class="form-control" placeholder="Email Address">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" name="password" value="" class="form-control" placeholder="Password">
+                  </div>
+                    <button type="submit" name="submit">Sign In</button>
+              </form>
+              <a href="#" data-toggle="modal" data-target="#resetModal"> I forgot my password </a>
+          </div>
+
+
+            <div class="col-12 col-lg-4 more">
+                <span class="or mt-3 hidden-lg-up">or</span>
+                <div class="social-options pt-2 mb-5 mx-auto">
+                    <span class="lead hidden-md-down">login with</span>
+                    <button><i class="fa fa-facebook"></i>acebook</button>
+                    <button><i class="fa fa-google"></i>oogle</button>
+                </div>
+                <span class="lead">Doesn't have an account ?</span>
+                <a href="#" class="btn-jump">Sign Up Now</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Forgot Password modal  -->
+    <div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p class="lead">In order to reset your password you need to enter your email address here.</p>
+              <form>
+                  <input type="email" name="email" placeholder="Email Address" class="form-control my-2">
+                  <button type="submit" name="submit" class="bg-btn">Reset</button>
+              </form>
+
+              <!-- <div id="error" class="flash">
+                  <i class="fa fa-times-circle"></i>
+                  <p class="lead">Something went wrong.</p>
+              </div> -->
+
+              <!-- <div id="success" class="flash">
+                  <i class="fa fa-check-square"></i>
+                  <p class="lead">Something went wrong.</p>
+              </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+ 
