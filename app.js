@@ -76,16 +76,36 @@ app.use(validator({
     };
   },
   customValidators: {
-    isExist : function(username){
+    isExist_username : function(username){
         
       return new Promise(function(resolve,reject){
           
           User.findOne({'username':username},(err,user) => {
+
+              if(err) throw err;
+
               if(user){
                 return reject();
               };
 
+              return resolve();
+          });            
+        
+      });
+
+    },
+
+    isExist_email : function(email){
+        
+      return new Promise(function(resolve,reject){
+          
+          User.findOne({'email':email},(err,user) => {
+
               if(err) throw err;
+
+              if(user){
+                return reject();
+              };
 
               return resolve();
           });            
@@ -93,6 +113,7 @@ app.use(validator({
       });
 
     }  
+
  }
 }));
 
@@ -113,11 +134,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 var index = require('./routes/index');
 var users = require('./routes/users');
 var search = require('./routes/search');
+var token  = require('./routes/tokens');
 
 
 app.use('/', index);
 app.use('/', users);
-app.use('/search',search);
+app.use('/', search);
+app.use('/', token);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

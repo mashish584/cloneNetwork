@@ -47,18 +47,15 @@ function validation(req,res,next){
 	});
 
 	req.assert('confirm','Password not matced').equals(req.body.password); 
-	req.checkBody('username','Username already exist').isExist();
+	req.checkBody('username','Username already exist').isExist_username();
+	req.checkBody('email','Email already exist').isExist_email();
 
 	req.asyncValidationErrors().then(function(){
-		console.log("No Erros");
 			next();
-
 	},function(errors){
-	
 		if(errors){
 			res.send(errors[0]);
 		}
-
 	});
 
 }

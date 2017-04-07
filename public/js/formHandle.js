@@ -31,23 +31,41 @@ function register_user(e){
 		success    : function(response,status,http){
 			let message = response.msg,
 				element = response.param,
+				success = response.success,
+				id      = "error",
+				icon   = "fa-times-circle",
 				flashModal = document.querySelector('#flashModal .modal-body');
 
-			document.querySelector(`[name=${element}]`).value = "" ;
+			if(element)  document.querySelector(`[name=${element}]`).value = "" ;
+
+			if(success) {
+				id = "success";
+				icon = "fa-check-square";
+			    document.querySelector("form").reset();
+			} 
 			
-			flashModal.innerHTML = `<div id="error" class="flash">
-                        			  <i class="fa fa-times-circle"></i>
+			flashModal.innerHTML = `<div id="${id}" class="flash">
+                        			  <i class="fa ${icon}"></i>
                           			  <p class="lead">${message}</p>
                       				</div>`;
 
             //show flashModal
             $('#flashModal').modal('show');
 
+           if(success){
+           		 window.addEventListener("click", function(){
+           		 	window.location.href = "/";
+            	 });
+           }
+            	
+
             // set as default
             button.style.opacity = '1';
 			button.removeAttribute("disabled");
+  
 
 		},
+
 		error  : function(http,status,error){
 
 		}
