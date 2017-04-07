@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var engine = require('ejs-mate');
 var validator = require('express-validator');
+var User   = require('./models/user');
 
 /*
 * Database connectivity with mongoose -- START
@@ -76,15 +77,21 @@ app.use(validator({
   },
   customValidators: {
     isExist : function(username){
-      User.findOne({username:username},(err,user)=>{
-          if(err) throw err;
-          if(user){
-            return true;
-          }else{
-            return false;
-          }
-    
+        
+      return new Promise(function(resolve,reject){
+          
+          User.findOne({'username':username},(err,user) => {
+              if(user){
+                return reject();
+              };
+
+              if(err) throw err;
+
+              return resolve();
+          });            
+        
       });
+
     }  
  }
 }));

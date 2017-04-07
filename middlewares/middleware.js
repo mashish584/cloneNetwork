@@ -49,16 +49,17 @@ function validation(req,res,next){
 	req.assert('confirm','Password not matced').equals(req.body.password); 
 	req.checkBody('username','Username already exist').isExist();
 
-	//storing errors
+	req.asyncValidationErrors().then(function(){
+		console.log("No Erros");
+			next();
 
-	let errors = req.validationErrors();
+	},function(errors){
+	
+		if(errors){
+			res.send(errors[0]);
+		}
 
-	if(errors){
-		res.send(errors[0]);
-	}else{
-		console.log("No errors");
-		return next();
-	}
+	});
 
 }
 
