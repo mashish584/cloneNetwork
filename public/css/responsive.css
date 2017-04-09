@@ -281,10 +281,14 @@
 
     #updateForm .btn-update{
         float: left;
-      }
+    }
 
 
     /* Login or Signup Style */
+
+    .login.user-form{
+      height: 100%;
+    }
 
     .user-form form,
     .social-options{

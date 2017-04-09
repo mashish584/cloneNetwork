@@ -4,6 +4,7 @@
 // declaration
 
 const signup = document.querySelector('#signup');
+const resetToken  = document.querySelector('#reset');  
 
 
 // formHandling functions
@@ -46,7 +47,7 @@ function register_user(e){
 			
 			flashModal.innerHTML = `<div id="${id}" class="flash">
                         			  <i class="fa ${icon}"></i>
-                          			  <p class="lead">${message}</p>
+                          			  <p class="lead" style="color:#a9a9a9">${message}</p>
                       				</div>`;
 
             //show flashModal
@@ -67,7 +68,13 @@ function register_user(e){
 		},
 
 		error  : function(http,status,error){
-
+				flashModal.innerHTML = `<div id="error" class="flash">
+                        			 		 <i class="fa fa-times-circle"></i>
+                          			  		<p class="lead" style="color:#a9a9a9">Something went wrong.</p>
+                      					</div>`;
+                // set as default
+	            button.style.opacity = '1';
+				button.removeAttribute("disabled");
 		}
 
 	});
@@ -75,6 +82,56 @@ function register_user(e){
 }
 
 
+function send_Token(e){
+	//stop default action
+	e.preventDefault();
+
+	const  button = this.children[this.children.length-1];
+
+
+	//send token request to post route
+
+	$.ajax({
+		url : '/sendToken',
+		method : 'POST',
+		data : $(this).serialize(),
+		dataType : 'json',
+
+		beforeSend : function(http){
+			button.style.opacity = "0.4";
+			button.setAttribute("disabled", "true");
+			button.textContent = "Sending";
+		},
+
+		success : function(response,status,http){
+			let message = response.msg,
+				success = response.success;
+
+			if(success) {
+				document.querySelector('#flash').innerHTML = `<p class="lead" style="color:#8bc34a;font-size:1em;font-weight:500;">${message}</p>`;
+				resetToken.reset();
+			}else{
+				document.querySelector('#flash').innerHTML = `<p class="lead" style="color:#f44336;font-size:1em;font-weight:500;">${message}</p>`;
+				resetToken.reset();
+			}
+
+			//set default
+			button.style.opacity = "1";
+			button.removeAttribute("disabled");
+			button.textContent = "Reset";
+
+		},
+
+		error : function(http,status,error){
+			document.querySelector('#flash').innerHTML = `<p class="lead" style="color:#f44336;font-size:1em;font-weight:500;">Something wents wrong.</p>`;
+			resetToken.reset();
+		}
+	});
+	
+}
+
+
 // assigning events
 
 if(signup) signup.addEventListener('submit',register_user);
+if(resetToken) resetToken.addEventListener('submit',send_Token);

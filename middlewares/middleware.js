@@ -35,7 +35,7 @@ function validation(req,res,next){
 						notEmpty : true, 
 						isLength : {
 							options : [{min:8}],
-							errorMessage : "Password must be greater than 8 characters"
+							errorMessage : "Password must be greater than 7 characters"
 						},
 						errorMessage: 'Password is required' 
 					 },

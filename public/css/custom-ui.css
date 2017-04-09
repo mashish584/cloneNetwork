@@ -47,6 +47,10 @@ li{
   top: 30%;
 }
 
+.modal .form-control{
+  padding: 16px;
+}
+
 .modal-body li{
     border-bottom: 1px solid #f5f5f5;
     padding-bottom: 2%;
@@ -83,6 +87,20 @@ li{
   left: 50%;
   margin-top: -50px;
   margin-left: -50px;
+}
+
+.alert{
+  color: #fff;
+  transition: 700ms ease-in;
+  border-color: none;
+}
+
+.alert-danger{
+   background: #F44336;
+}
+
+.alert-success{
+  background: #8bc34a;
 }
 
 /*Navigation Styles*/
@@ -488,9 +506,7 @@ a.active{
     background: #2196f3;
     color: #fff;
     width: 100%;
-    font-size: 0.8em;
-    height: 50px;
-    border-radius: 5px;
+    padding:10px;
 }
 
 .modal-body .lead{

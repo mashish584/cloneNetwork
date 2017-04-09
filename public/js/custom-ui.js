@@ -13,7 +13,8 @@ const bell = document.querySelector('.btn-notification'),
  search_btn = document.querySelector('.search'),
  swipe_panel = document.querySelector('#menu-panel'),
  swipeForm = document.querySelector('#updateForm'),
- loadPassForm = document.querySelectorAll('#loadForm');
+ loadPassForm = document.querySelectorAll('#loadForm'),
+ alert        = document.querySelector('.alert') ;
 
 let panel_on = false;
 let set_on = false;
