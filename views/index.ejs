@@ -8,7 +8,7 @@
         <p class="lead my-1">Join the community now and share your photos and stories.</p>
         <div class="row">
           <div class="col-12 col-lg-4 offset-lg-2">
-              <form class="my-5">
+              <form action="/login" method="post" class="my-5">
                   <% if(error.length>0) { %>
                     <div class="alert alert-danger " role="alert">
                       <%=error%>
@@ -37,8 +37,8 @@
                 <span class="or mt-3 hidden-lg-up">or</span>
                 <div class="social-options pt-2 mb-5 mx-auto">
                     <span class="lead hidden-md-down">login with</span>
-                    <button><i class="fa fa-facebook"></i>acebook</button>
-                    <button><i class="fa fa-google"></i>oogle</button>
+                    <button id="fb"><i class="fa fa-facebook"></i>acebook</button>
+                    <button id="google"><i class="fa fa-google"></i>oogle</button>
                 </div>
                 <span class="lead">Doesn't have an account ?</span>
                 <a href="#" class="btn-jump">Sign Up Now</a>

@@ -2,7 +2,7 @@
 
 // Express Validator middleware
 
-function validation(req,res,next){
+function reg_valid(req,res,next){
 
 	req.checkBody({
 
@@ -60,9 +60,36 @@ function validation(req,res,next){
 
 }
 
+function login_valid(req,res,next){
+	var data;
+
+    if(req.body.email == ""){
+         req.flash('error','Email address required.');
+	     res.redirect('/');
+    }else{
+    
+        req.checkBody('email','Email already exist').isExist_email();
+
+        req.getValidationResult()
+           .then(function(result){
+
+              var error = result.array();
+              var data;
+
+	              if(error.length == 0){
+	                req.flash('error','Credentials not matched');
+	                res.redirect('/');
+	              }else{
+	              	next();
+	              }
+            });
+      }
+}
+
 
 /*
 * Exporting all the modules
 */
 
-module.exports.validation = validation;
+module.exports.reg_valid = reg_valid;
+module.exports.login_valid = login_valid;

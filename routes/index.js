@@ -3,6 +3,7 @@ var router = express.Router();
 var middleware = require('../middlewares/middleware');
 var nodemailer = require('nodemailer');
 var bcrypt = require('bcrypt');
+var passport = require('passport');
 
 var User   = require('../models/user');
 var get    = require('../secure/smtp-cred');
@@ -20,6 +21,24 @@ router.get('/', function(req, res, next) {
 router.get('/signup',function(req,res,next){
 	res.render('signup',{title:"Community Network | Sign Up",header:false,navbar:false});
 });
+
+/* GET O-AUTH */
+
+router.get('/auth/facebook',passport.authenticate('facebook',{scope:['email']}));
+
+router.get('/auth/facebook/callback',passport.authenticate('facebook', { 
+  failureRedirect: '/',
+  successRedirect: '/home',
+  failureFlash:true
+}));
+
+router.get('/auth/google',passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/auth/google/callback', passport.authenticate('google',{ 
+  failureRedirect: '/',
+  successRedirect: '/home',
+  failureFlash:true
+}));
 
 
 /* POST send token */
@@ -52,48 +71,38 @@ router.post('/sendToken',function(req,res,next){
 
                     // Generating Token
                   
-                     var hash = methods.token(req.body.email);
-
-                      var transporter = nodemailer.createTransport({
-                            service: 'gmail',
-                            auth: {
-                                user: get.username,
-                                pass: get.password
-                            },
-                            tls: {
-                                rejectUnauthorized : false
-                            }
-                        });
-
-                        var mailOptions = {
-                            from     : 'Community Network',
-                            to       :  req.body.email, 
-                            subject  : 'PASSWORD RESET', 
-                            html     : `<h1>RESET PASSWORD</h1>
-                                        <p>Your request for password reset is approved.Click <a href="http://localhost:3000/reset/${req.body.email}/${hash}">here</a> to activate.Valid for 5 minutes only.</p>
-                                        `
-                        };
+                    var hash = methods.token(req.body.email);
 
 
-                        transporter.sendMail(mailOptions, (error, info) => {
+                    var mailOptions = {
+                        from     : 'Community Network',
+                        to       :  req.body.email, 
+                        subject  : 'PASSWORD RESET', 
+                        html     : `<h1>RESET PASSWORD</h1>
+                                    <p>Your request for password reset is approved.Click <a href="http://localhost:3000/reset/${req.body.email}/${hash}">here</a> to activate.Valid for 5 minutes only.</p>
+                                    `
+                    };
 
-                            if (error) throw err;
-                            
-                            // save user to db
 
-                            User.findOneAndUpdate(
-                                    {email:req.body.email},
-                                    {$set: {resetToken:hash,expireToken:Date.now() + 60*30*1000}},
-                                    (err,user)=>{
+                    methods.sendMail(mailOptions).then(function(info){
+                        
+                        User.findOneAndUpdate(
+                                {email:req.body.email},
+                                {$set: {resetToken:hash,expireToken:Date.now() + 60*30*1000}},
+                                (err,user)=>{
+                                    
+                                    if(err) data = {msg:"Something went wrong.",success:false};
+
+                                    if(user) data = {msg:"Check your email for the reset link.",success:true};
                                         
-                                        if(err) data = {msg:"Something went wrong.",success:false};
-
-                                        if(user) data = {msg:"Check your email for the reset link.",success:true};
-                                            
-                                        res.send(data);
-                                    });
-                                 
+                                    res.send(data);
                         });
+
+                    }).catch(function(err){
+                         var data = {msg:"Something went wrong.",param:"",success:false};
+                         res.send(data);
+                    });
+
                   
                     /**
                     * Send reset token to user - Nodemailer END
@@ -109,9 +118,19 @@ router.post('/sendToken',function(req,res,next){
 
 });
 
+
+/* Post Login - Local */
+
+router.post('/login',middleware.login_valid,passport.authenticate('local.login',{
+    successRedirect : '/home',
+    failureRedirect : '/',
+    failureFlash    : true
+}));
+
+
 /* POST Register User */
 
-router.post('/register',middleware.validation,function(req,res,next){
+router.post('/register',middleware.reg_valid,function(req,res,next){
 	
 	var hash = methods.token(req.body.email);
 
@@ -119,7 +138,7 @@ router.post('/register',middleware.validation,function(req,res,next){
     		fullname  	 : req.body.fullname,
     		username  	 : req.body.username,
     		email 	  	 : req.body.email,
-    		password  	 : req.body.password,
+    		password  	 : bcrypt.hashSync(req.body.password, 10),
     		accountToken : hash
 
     };
@@ -128,18 +147,7 @@ router.post('/register',middleware.validation,function(req,res,next){
     *  Sending activation tokento user for account activation. - START
     **/
 
-        var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: get.username,
-                pass: get.password
-            },
-            tls: {
-                rejectUnauthorized : false
-            }
-        });
-
-        var mailOptions = {
+     var mailOptions = {
             from     : 'Community Network',
             to       :  userData.email, 
             subject  : 'Account Acivation', 
@@ -149,21 +157,17 @@ router.post('/register',middleware.validation,function(req,res,next){
                         `
         };
 
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                return console.log(error);
-            }
-            // console.log('Message %s sent: %s', info.messageId, info.response);
-            // save user to db
-             var newUser = new User(userData);
-                 newUser.save((err) => {
-                    if(err) throw err;
-                    var data = {msg:"Account created successfully.Check your email for activation.",param:"",success:true};
-                    res.send(data);
-                 });
+        methods.sendMail(mailOptions).then(function(info){
+            var newUser = new User(userData);
+            newUser.save((err) => {
+                if(err) throw err;
+                var data = {msg:"Account created successfully.Check your email for activation.",param:"",success:true};
+                res.send(data);
+            });
+        }).catch(function(err){
+             var data = {msg:"Something went wrong.",param:"",success:false};
+             res.send(data);
         });
-
 
     /**  
     *  Sending activation tokento user for account activation. - END
@@ -202,6 +206,10 @@ router.post('/reset/:user/:token',function(req,res,next){
     });
 
 });
+
+
+
+
 
 
 module.exports = router;

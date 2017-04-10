@@ -7,29 +7,21 @@ var bcrypt   = require('bcrypt');
 var userSchema = new Schema({
 
 	fullname 	 : {type:String,required:true,unique:false,trim:true},
-	username 	 : {type:String,required:true,unique:true,trim:true},
+	username 	 : {type:String,unique:true,trim:true},
 	email    	 : {type:String,required:true,unique:true,trim:true},
-	password 	 : {type:String,required:true,unique:false,trim:false},
+	password 	 : {type:String,trim:false},
+	image        : {type:String,default:"https://unsplash.it/40/40"},
 	status   	 : {type:String,default:0},
-	accountToken : {type:String,default:""},
-	resetToken   : {type:String,default:""},
-	expireToken  : {type:Date,default:Date.now}
+	accountToken : {type:String},
+	resetToken   : {type:String},
+	expireToken  : {type:Date},
+	facebookID   : {type:String},
+	fbToken      : Array ,
+	googleID     : {type:String},
+	googleToken  : Array   
 
 });
 
-userSchema.pre('save',function(next){
-
-	var data = this;
-
-	bcrypt.hash(data.password, 10, function(err, hash) {
-  			// Store hash in your password DB. 
-  			if(err) throw err;
-
-  			data.password = hash;
-  			next();
-	});
-
-});
 
 var User = mongoose.model('User',userSchema);
 

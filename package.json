@@ -20,6 +20,9 @@
     "mongoose": "^4.9.3",
     "morgan": "~1.7.0",
     "nodemailer": "^4.0.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0"
   }
 }

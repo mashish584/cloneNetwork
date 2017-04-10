@@ -7,6 +7,10 @@ var bodyParser = require('body-parser');
 var engine = require('ejs-mate');
 var flash = require('connect-flash');
 var validator = require('express-validator');
+var passport = require('passport');
+var localStrategy = require('passport-local').Strategy;
+
+
 var User   = require('./models/user');
 
 /*
@@ -20,6 +24,7 @@ var mongoose = require('mongoose');
 var mongoStore = require('connect-mongo')(session);
 
 mongoose.connect("mongodb://localhost:27017/cloneNetwork");
+mongoose.Promise = global.Promise;
 
 var db = mongoose.connection;
 
@@ -27,6 +32,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("Connection open");
 });
+
+require('./secure/passport');
 
 /*
 * Database connectivity with mongoose -- END
@@ -54,6 +61,9 @@ app.use(session({
 /*
 * Session storage in DB -- END
 */
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 /*
@@ -149,6 +159,7 @@ app.use('/', index);
 app.use('/', users);
 app.use('/', search);
 app.use('/', token);
+
 
 
 // catch 404 and forward to error handler

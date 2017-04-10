@@ -93,6 +93,7 @@ li{
   color: #fff;
   transition: 700ms ease-in;
   border-color: none;
+  border: none;
 }
 
 .alert-danger{

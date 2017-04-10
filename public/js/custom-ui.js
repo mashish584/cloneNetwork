@@ -14,7 +14,9 @@ const bell = document.querySelector('.btn-notification'),
  swipe_panel = document.querySelector('#menu-panel'),
  swipeForm = document.querySelector('#updateForm'),
  loadPassForm = document.querySelectorAll('#loadForm'),
- alert        = document.querySelector('.alert') ;
+ alert        = document.querySelector('.alert'),
+ fb  = document.querySelector('#fb'),
+ google = document.querySelector('#google');
 
 let panel_on = false;
 let set_on = false;
@@ -107,3 +109,10 @@ function loadHTML(e){
 }
 
 if(loadPassForm) loadPassForm.forEach(loadBtn => loadBtn.addEventListener('click',loadHTML));
+if(fb) fb.addEventListener('click',() => {
+  window.location.href = "/auth/facebook";
+});
+
+if(google) google.addEventListener('click',() => {
+  window.location.href = "/auth/google";
+});

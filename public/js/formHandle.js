@@ -4,7 +4,8 @@
 // declaration
 
 const signup = document.querySelector('#signup');
-const resetToken  = document.querySelector('#reset');  
+const resetToken  = document.querySelector('#reset'); 
+const signIn = document.querySelector('#signIn'); 
 
 
 // formHandling functions
@@ -135,3 +136,4 @@ function send_Token(e){
 
 if(signup) signup.addEventListener('submit',register_user);
 if(resetToken) resetToken.addEventListener('submit',send_Token);
+
