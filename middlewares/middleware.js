@@ -87,9 +87,27 @@ function login_valid(req,res,next){
 }
 
 
+
+/*
+*	PROTECTING PAGES - SESSION USER
+*/
+
+function isAllowed(req,res,next){
+
+	return (req.user && req.user.status == 1) ? next():res.redirect('/');
+	
+}
+
+function notAllowed(req,res,next){
+	return  (!req.user) ? next():res.redirect('/home');
+}
+
+
 /*
 * Exporting all the modules
 */
 
 module.exports.reg_valid = reg_valid;
 module.exports.login_valid = login_valid;
+module.exports.isAllowed = isAllowed;
+module.exports.notAllowed = notAllowed;

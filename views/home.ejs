@@ -5,8 +5,8 @@
         <div class="row mb-2">
             <form id="post-form" class="col-md-6 col-lg-5 px-2 py-2">
                 <div class="user-info">
-                    <img src="https://unsplash.it/40/40" alt="" class="ml-2 mb-2">
-                    <span class="ml-2">Erice Danielle</span>
+                    <img src="<%= user.image %>" alt="" class="ml-2 mb-2">
+                    <span class="ml-2"><%= user.fullname %></span>
                 </div>
                 <div class="form-group">
                     <textarea name="body" maxlength="120" class="form-control body" placeholder="Share an update"></textarea>

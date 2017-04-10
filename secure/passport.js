@@ -48,7 +48,7 @@ passport.use(new facebookStrategy({
   callbackURL: "http://localhost:3000/auth/facebook/callback",
   profileFields: ['id', 'displayName', 'photos', 'email'],
   passReqToCallback : true
-},(accessToken,refreshToken,profile,done) => {
+},(req,accessToken,refreshToken,profile,done) => {
 
 
 	User.findOne({$or:[{facebookID:profile.id},{email:profile.emails[0].value}]},(err,user) => {

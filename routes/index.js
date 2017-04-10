@@ -10,7 +10,7 @@ var get    = require('../secure/smtp-cred');
 var methods = require('../secure/methods');
 
 /* GET login */
-router.get('/', function(req, res, next) {
+router.get('/',middleware.notAllowed, function(req, res, next) {
   res.render('index',{title:"Community Network | Login",header:false,navbar:false});
 });
 
@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 
 /* GET signup */
 
-router.get('/signup',function(req,res,next){
+router.get('/signup',middleware.notAllowed,function(req,res,next){
 	res.render('signup',{title:"Community Network | Sign Up",header:false,navbar:false});
 });
 
@@ -39,6 +39,14 @@ router.get('/auth/google/callback', passport.authenticate('google',{
   successRedirect: '/home',
   failureFlash:true
 }));
+
+/* GET Logout */
+
+router.get('/logout',function(req,res,next){
+  req.session.destroy();
+  req.logout();
+  res.redirect('/');
+}); 
 
 
 /* POST send token */

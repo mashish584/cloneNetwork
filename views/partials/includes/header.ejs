@@ -18,7 +18,7 @@
               </ul> -->
             </div>
           </span>
-          <a href="#"><i class="fa fa-user-o"></i></a>
+          <a href="/profile/<%= user._id %>"><i class="fa fa-user-o"></i></a>
           <a href="#"><i class="fa fa-envelope-open-o"></i></a>
           <button id="sub-menu">
             <i class="fa fa-bell-o"></i>
@@ -39,8 +39,8 @@
         <button type="button" id="sub-menu" class="lg-setting bg-btn btn-lg-set hidden-sm-down mr-4">
           <i class="fa fa-th-large"></i>
           <div class="sub-panel">
-             <a href="#">Update Information</a>
-             <a href="#">Sign out</a>
+             <a href="/update/<%= user._id %>">Update Information</a>
+             <a href="/logout">Sign out</a>
           </div>
         </button>
     </header>
