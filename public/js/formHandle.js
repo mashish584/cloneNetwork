@@ -6,6 +6,7 @@
 const signup = document.querySelector('#signup');
 const resetToken  = document.querySelector('#reset'); 
 const signIn = document.querySelector('#signIn'); 
+const updateBtn = document.querySelector('.btn-save');
 
 
 // formHandling functions
@@ -132,8 +133,49 @@ function send_Token(e){
 }
 
 
+
+function update_user(){
+
+  let fullname = document.querySelector('[name="fullname"]');
+  let username =  document.querySelector('[name="username"]');
+  let bio =  document.querySelector('[name="bio"]');
+
+  let data = {fullname:fullname.value,username:username.value,bio:bio.value};
+
+  $.ajax({
+  	 method : 'POST',
+  	 data :   data,
+  	 dataType : 'json',
+  	 success : function(response){
+  	 	
+  	 	let message = response.msg,
+  	 	    success = response.success,
+  	 	    html;
+
+  	 	if(success) {
+
+  	 	    html =  `<div class="alert alert-success " role="alert">
+                      ${message}
+                    </div>`;
+
+  	 	}else{
+  	 		 html =  `<div class="alert alert-danger " role="alert">
+                    	  ${message}
+                      </div>`;
+  	 	}
+
+  	 	document.querySelector('#flash').innerHTML = html;
+
+  	 }
+  });
+
+
+}
+
+
 // assigning events
 
 if(signup) signup.addEventListener('submit',register_user);
 if(resetToken) resetToken.addEventListener('submit',send_Token);
+
 

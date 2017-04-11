@@ -16,7 +16,9 @@ const bell = document.querySelector('.btn-notification'),
  loadPassForm = document.querySelectorAll('#loadForm'),
  alert        = document.querySelector('.alert'),
  fb  = document.querySelector('#fb'),
- google = document.querySelector('#google');
+ google = document.querySelector('#google'),
+ uploadInput = document.querySelector('[name="profilePic"]');
+
 
 let panel_on = false;
 let set_on = false;
@@ -60,6 +62,7 @@ function toggleSubMenu(){
 }
 
 
+
 if(bell) bell.addEventListener('click',showPanel);
 if(setting) setting.addEventListener('click',showSettings);
 if(parent_panels) parent_panels.forEach(parent_panel => parent_panel.addEventListener('click',toggleSubMenu));
@@ -78,14 +81,18 @@ if(container){
 
 }
 
+
 if(swipe_btn){
 
   swipeForm.addEventListener('click',(e)=>{
-      e.preventDefault();
+      if(e.target.classList.contains('btn-save')) update_user();
       if(!e.target.classList.contains('swipe_btn')) return;
+      e.preventDefault();
       swipeForm.classList.toggle('swipe');
       swipe_panel.classList.toggle('index');
   });
+
+  
 
 }
 
@@ -95,17 +102,56 @@ if(swipe_btn){
 function loadHTML(e){
   e.preventDefault();
 
-  $.ajax({
-      url  : "/request/html/"+e.target.dataset.get+".html",
-      type : "GET",
-      dataType : "html",
-      beforeSend : function(){
 
-      },
-      success : function(response){
-        swipeForm.innerHTML = response;
-      }
-  });
+  var html = `
+              <button id="swipe" class="bg-btn hidden-lg-up swipe_btn" style="font-size:1em; float:left;"><i class="fa fa-align-right swipe_btn"></i></button>
+              <div class="row" style="clear:both;">
+                  <div class="col-12 col-md-10 mx-auto mb-3">
+                      <div id="flash" class="my-2"></div>
+                      <input type="passwod" name="oldPassword" value="" placeholder="Old Password" class="form-control">
+
+                      <input type="password" name="newPassword" value="" placeholder="New Password" class="form-control">
+
+                      <input type="password" name="confirmPassword" value="" placeholder="Confirm Password" class="form-control">
+
+                      <button type="button" class="bg-btn btn-save" name="button" style="width:100%;font-size:0.9em;">Change Password</button>
+                  </div>
+                  <div class="col-12 col-md-10 mx-auto mt-3 py-5" style="border-top:1px solid #dcdcdc;">
+                      <p class="lead">I want to delete my account and all the details right now.</p>
+                      <button type="delete" name="button" class="btn bg-btn btn-dlt">Delete my Account</button>
+                  </div>
+              </div>`;
+
+
+  if(e.target.dataset.get == "infoForm"){
+    var data = JSON.parse(e.target.dataset.user);
+    
+    html    = `  <button id="swipe" class="bg-btn hidden-lg-up swipe_btn" style="font-size:1em; float:left;"><i class="fa fa-align-right swipe_btn"></i></button>
+                  <div class="row" style="clear:both;">
+                    <div class="col-12 col-md-4" style="text-align:center">
+                        <img src="${data.image}" alt="" class="img-fluid">
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <span>${data.fullname}</span>
+                        <b>@${data.username}</b>
+                        <p class="lead">${data.bio}</p>
+                    </div>
+                    <div class="col-11 col-md-12 mx-auto">
+                        <div id="flash" class="my-2"></div>
+                        <input type="text" name="fullname" value="${data.fullname}" placeholder="fullname" class="form-control">
+
+                        <input type="text" name="username" value="${data.username}" placeholder="username" class="form-control">
+
+                        <textarea name="bio" class="form-control" placeholder="password" maxlength="120">${data.bio}</textarea>
+
+                        <button type="button" class="bg-btn btn-save" name="button">Save</button>
+                    </div>
+                   </div>`;
+  }
+
+  
+  swipeForm.innerHTML = html;
+
 }
 
 if(loadPassForm) loadPassForm.forEach(loadBtn => loadBtn.addEventListener('click',loadHTML));
@@ -116,3 +162,6 @@ if(fb) fb.addEventListener('click',() => {
 if(google) google.addEventListener('click',() => {
   window.location.href = "/auth/google";
 });
+
+
+

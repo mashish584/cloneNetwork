@@ -87,25 +87,7 @@ app.use(validator({
     };
   },
   customValidators: {
-    isExist_username : function(username){
-        
-      return new Promise(function(resolve,reject){
-          
-          User.findOne({'username':username},(err,user) => {
-
-              if(err) throw err;
-
-              if(user){
-                return reject();
-              };
-
-              return resolve();
-          });            
-        
-      });
-
-    },
-
+ 
     isExist_email : function(email){
         
       return new Promise(function(resolve,reject){

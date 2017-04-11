@@ -47,7 +47,6 @@ function reg_valid(req,res,next){
 	});
 
 	req.assert('confirm','Password not matced').equals(req.body.password); 
-	req.checkBody('username','Username already exist').isExist_username();
 	req.checkBody('email','Email already exist').isExist_email();
 
 	req.asyncValidationErrors().then(function(){
@@ -61,10 +60,9 @@ function reg_valid(req,res,next){
 }
 
 function login_valid(req,res,next){
-	var data;
 
-    if(req.body.email == ""){
-         req.flash('error','Email address required.');
+    if(req.body.email == "" || req.body.password == ""){
+         req.flash('error','All fields are mandatory.');
 	     res.redirect('/');
     }else{
     
@@ -74,10 +72,9 @@ function login_valid(req,res,next){
            .then(function(result){
 
               var error = result.array();
-              var data;
 
 	              if(error.length == 0){
-	                req.flash('error','Credentials not matched');
+	                req.flash('error','Credentials not matched.');
 	                res.redirect('/');
 	              }else{
 	              	next();
@@ -87,6 +84,57 @@ function login_valid(req,res,next){
 }
 
 
+function update_Valid(req,res,next){
+
+	req.checkBody({
+
+		'fullname' : { 
+						notEmpty : true, 
+						isLength : {
+							options : [{ min:5 , max : 25 }],
+							errorMessage : "Fullname must be between 5 to 25 characters"
+						},
+						errorMessage: 'Fullname is required' 
+					 },
+
+		'username' : { 
+						notEmpty : true, 
+						isLength : {
+							options : [{ min:5 , max : 12 }],
+							errorMessage : "Username must be between 5 to 12 characters"
+						},
+						errorMessage: 'Username is required' 
+					 },
+
+		'bio'      : {
+						notEmpty : true, 
+						isLength : {
+							options : [{ min:25,max:120}],
+							errorMessage : "Bio should be between 25-120 characters"
+						},
+						errorMessage: 'Bio is required'
+
+					 }
+
+	});
+
+	req.getValidationResult()
+           .then(function(result){
+
+              var errors = result.array();
+
+	              if(errors.length == 0){
+	               	next();
+	              }else{
+	              	res.send(errors[0]);
+	              }
+            });
+
+}
+
+
+
+
 
 /*
 *	PROTECTING PAGES - SESSION USER
@@ -94,7 +142,17 @@ function login_valid(req,res,next){
 
 function isAllowed(req,res,next){
 
-	return (req.user && req.user.status == 1) ? next():res.redirect('/');
+	if(req.user){
+		
+		if(req.user.status == 0){
+  			res.redirect('/logout');
+		}
+
+		next();
+
+	}else{
+		res.redirect('/');
+	}
 	
 }
 
@@ -111,3 +169,4 @@ module.exports.reg_valid = reg_valid;
 module.exports.login_valid = login_valid;
 module.exports.isAllowed = isAllowed;
 module.exports.notAllowed = notAllowed;
+module.exports.update_Valid = update_Valid;
