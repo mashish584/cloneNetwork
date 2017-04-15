@@ -50,6 +50,7 @@ function sendMail(mailOptions){
 function saveUser(profile,newUser,hash){
                 newUser.fullname = profile.displayName;
                 newUser.email = profile.emails[0].value;
+                newUser.image = profile.photos[0].value;
                 newUser.status = "1";
                 return newUser;
 }

@@ -11,18 +11,15 @@
     <div id="search" class="container py-5">
 
       <span class="search-box">
-        <input type="search" name="" value="" class="form-control" placeholder="Search" class="search">
+        <input type="hidden" name="sess_id" value="<%= session_id %>">
+        <input type="search" name="" value="" class="form-control searchUser" placeholder="Search" class="search">
         <i class="fa fa-search"></i>
       </span>
 
-      <div class="sub-search mt-2">
-        <li class="px-2 py-4">
-          <a href="#">
-            <img src="https://unsplash.it/50/50" alt="" class="mr-3">
-            <b>Ashish Mehra</b>
-            <button type="button" name="button" class="btn btn-info btn-sm ml-3" style="text-transform:uppercase;letter-spacing:1px;">Follow</button>
-          </a>
-        </li>
+      <div class="sub-search mt-4">
+       
+          <!-- Search results -->   
+
       </div>
 
     </div>

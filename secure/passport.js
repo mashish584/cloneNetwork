@@ -49,7 +49,7 @@ passport.use(new facebookStrategy({
   clientID: get.fbID,
   clientSecret: get.fbSecret,
   callbackURL: "http://localhost:3000/auth/facebook/callback",
-  profileFields: ['id', 'displayName', 'photos', 'email'],
+  profileFields: ['id', 'displayName', 'email','picture.type(large)'],
   passReqToCallback : true
 },(req,accessToken,refreshToken,profile,done) => {
 
@@ -64,7 +64,6 @@ passport.use(new facebookStrategy({
 				newUser = methods.saveUser(profile,newUser);
 				newUser.facebookID = profile.id;
 				newUser.fbToken.push({token:accessToken});
-				
 				newUser.save((err) => {
 					if(err) done(null,false,req.flash('error','Something went wrong.'));
 					return done(null,newUser);
@@ -97,8 +96,9 @@ passport.use(new googleStrategy({
 		}else{
 			var newUser = new User();
 				newUser = methods.saveUser(profile,newUser);
-				newUser.facebookID = profile.id;
-				newUser.fbToken.push({token:accessToken});
+				newUser.image = newUser.image.split("?")[0];
+				newUser.googleID = profile.id;
+				newUser.googleToken.push({token:accessToken});
 				
 				newUser.save((err) => {
 					if(err) done(null,false,req.flash('error','Something went wrong.'));

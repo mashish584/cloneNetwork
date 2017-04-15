@@ -87,7 +87,7 @@ router.post('/sendToken',function(req,res,next){
                         to       :  req.body.email, 
                         subject  : 'PASSWORD RESET', 
                         html     : `<h1>RESET PASSWORD</h1>
-                                    <p>Your request for password reset is approved.Click <a href="http://localhost:3000/reset/${req.body.email}/${hash}">here</a> to activate.Valid for 5 minutes only.</p>
+                                    <p>Your request for password reset is approved.Click <a href="http://localhost:3000/reset/${req.body.email}/${hash}">here</a> to activate.Valid for 30 minutes only.</p>
                                     `
                     };
 
@@ -148,7 +148,6 @@ router.post('/register',middleware.reg_valid,function(req,res,next){
     		email 	  	 : req.body.email,
     		password  	 : bcrypt.hashSync(req.body.password, 10),
     		accountToken : hash
-
     };
 
     /**  
@@ -169,7 +168,7 @@ router.post('/register',middleware.reg_valid,function(req,res,next){
             var newUser = new User(userData);
             newUser.save((err) => {
                 if(err) throw err;
-                var data = {msg:"Account created successfully.Check your email for activation.",param:"",success:true};
+                var data = {msg:"Account created successfully.Check your email for activation.",success:true};
                 res.send(data);
             });
         }).catch(function(err){

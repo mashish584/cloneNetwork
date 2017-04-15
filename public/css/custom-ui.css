@@ -246,7 +246,9 @@ a.active{
 .btn-follow,
 .btn-msg,
 .btn-save,
-.btn-dlt{
+.btn-dlt,
+.btn-change,
+.btn-upload{
   background: #025aa5;
   border:none;
   color: #fff;
@@ -260,6 +262,13 @@ a.active{
   text-transform: uppercase;
   font-weight: 800;
   color:#025aa5;
+}
+
+.user-info img{
+  width: 40px;
+  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
 }
 
 /* Posts Section styling */
@@ -369,7 +378,12 @@ a.active{
 }
 
 .bio img{
+
   height: 80%;
+}
+
+#profileUpdate{
+  display: none;
 }
 
 .profile .details{
@@ -399,6 +413,11 @@ a.active{
   text-transform: uppercase;
 }
 
+.profile .bio img{
+  width: 80%;
+  height: 80%;
+}
+
 .profile td>b{
   color: #222;
   font-size: 1.2em;
@@ -414,7 +433,8 @@ a.active{
 }
 
 .btn-follow,
-.btn-msg{
+.btn-msg,
+.btn-upload{
   float: initial;
   background: transparent;
   border:1px solid #485563;
@@ -692,7 +712,8 @@ span.lead{
   padding: 10px;
 }
 
-#updateForm .btn-save{
+#updateForm .btn-save,
+#updateForm .btn-change{
   width: 100%;
   background: rgba(2,117,216,9);
   color: #fff;
@@ -706,6 +727,16 @@ span.lead{
 
 
 /* Search Page */
+
+#search .sub-search{
+  height: 90%;
+  overflow: auto;
+}
+
+.sub-search a{
+  display: block;
+}
+
 #search{
   background: #fff;
   height: 100vh;
@@ -720,32 +751,14 @@ span.lead{
   position: absolute;
   right: 5%;
   bottom: 30%;
+  font-size: 1em;
 }
 
 #search .search-box .form-control{
   width: 100%;
   border-color: transparent;
-  border-bottom-color: #222;
+  background: #f5f5f5;
+  border-radius: 0;
 }
 
-#search .sub-search{
-  height: 87%;
-  overflow: auto;
-  color: #222;
-}
 
-#search .sub-search li{
-  border-bottom: 1px solid #dcdcdc;
-}
-
-#search img{
-  border-radius: 50%;
-}
-
-#search b{
-  color: #a9a9a9;
-}
-
-#search span{
-  display: block;
-}

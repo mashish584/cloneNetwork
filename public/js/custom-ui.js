@@ -17,7 +17,10 @@ const bell = document.querySelector('.btn-notification'),
  alert        = document.querySelector('.alert'),
  fb  = document.querySelector('#fb'),
  google = document.querySelector('#google'),
- uploadInput = document.querySelector('[name="profilePic"]');
+ uploadInput = document.querySelector('[name="uploadPost"]'),
+ cameraBtn = document.querySelector('.profilePic'),
+ imgDialog = document.querySelector('input[type="file"]'),
+ subSearch = document.querySelector('.sub-search');;
 
 
 let panel_on = false;
@@ -70,6 +73,9 @@ if(parent_panels) parent_panels.forEach(parent_panel => parent_panel.addEventLis
 if(container){
 
     container.addEventListener('click',() => {
+      if(window.innerWidth > 768){
+        if(subSearch) subSearch.style.display = 'none';
+      }
       child_panels.forEach(childPanel => {
           if(childPanel.classList.contains('sh-panel')){
             childPanel.classList.remove('sh-panel');
@@ -86,6 +92,7 @@ if(swipe_btn){
 
   swipeForm.addEventListener('click',(e)=>{
       if(e.target.classList.contains('btn-save')) update_user();
+      if(e.target.classList.contains('btn-change')) change_password(e.target.dataset.user);
       if(!e.target.classList.contains('swipe_btn')) return;
       e.preventDefault();
       swipeForm.classList.toggle('swipe');
@@ -100,25 +107,30 @@ if(swipe_btn){
 // loading html with ajax
 
 function loadHTML(e){
+
   e.preventDefault();
 
+  var data = JSON.parse(e.target.dataset.user);
 
   var html = `
               <button id="swipe" class="bg-btn hidden-lg-up swipe_btn" style="font-size:1em; float:left;"><i class="fa fa-align-right swipe_btn"></i></button>
               <div class="row" style="clear:both;">
                   <div class="col-12 col-md-10 mx-auto mb-3">
+                      <p class="lead my-4 px-2" style="text-align:initial;">If you did registration with your social account and never created a password leave <strong><i>old password</i></strong> field empty.</p>
                       <div id="flash" class="my-2"></div>
-                      <input type="passwod" name="oldPassword" value="" placeholder="Old Password" class="form-control">
+                      <input type="password" name="oldPassword" value="" placeholder="Old Password" class="form-control">
 
                       <input type="password" name="newPassword" value="" placeholder="New Password" class="form-control">
 
                       <input type="password" name="confirmPassword" value="" placeholder="Confirm Password" class="form-control">
 
-                      <button type="button" class="bg-btn btn-save" name="button" style="width:100%;font-size:0.9em;">Change Password</button>
+                      <button type="button" data-user="${data.id}" class="bg-btn btn-change" name="button" style="width:100%;font-size:0.9em;">Change Password</button>
+                       
                   </div>
+
                   <div class="col-12 col-md-10 mx-auto mt-3 py-5" style="border-top:1px solid #dcdcdc;">
                       <p class="lead">I want to delete my account and all the details right now.</p>
-                      <button type="delete" name="button" class="btn bg-btn btn-dlt">Delete my Account</button>
+                      <button type="delete" data-user="${e.target.dataset.user}" name="button" class="btn bg-btn btn-dlt">Delete my Account</button>
                   </div>
               </div>`;
 
@@ -133,7 +145,7 @@ function loadHTML(e){
                     </div>
                     <div class="col-12 col-md-8">
                         <span>${data.fullname}</span>
-                        <b>@${data.username}</b>
+                        <b>${data.username}</b>
                         <p class="lead">${data.bio}</p>
                     </div>
                     <div class="col-11 col-md-12 mx-auto">
@@ -142,7 +154,7 @@ function loadHTML(e){
 
                         <input type="text" name="username" value="${data.username}" placeholder="username" class="form-control">
 
-                        <textarea name="bio" class="form-control" placeholder="password" maxlength="120">${data.bio}</textarea>
+                        <textarea name="bio" class="form-control" placeholder="About yourself" maxlength="120">${data.bio}</textarea>
 
                         <button type="button" class="bg-btn btn-save" name="button">Save</button>
                     </div>
@@ -161,6 +173,18 @@ if(fb) fb.addEventListener('click',() => {
 
 if(google) google.addEventListener('click',() => {
   window.location.href = "/auth/google";
+});
+
+if(cameraBtn) cameraBtn.addEventListener('click', () => {
+
+  imgDialog.click();
+
+});
+
+if(uploadInput) uploadInput.addEventListener('click', () => {
+
+  imgDialog.click();
+
 });
 
 

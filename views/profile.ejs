@@ -5,24 +5,44 @@
 
       <div class="row bio py-3">
           <div class="col-5 ">
-              <img src="https://unsplash.it/200/200" alt="" class="img-fluid">
+    
+             <% if(user.image && !user.image.includes("http")){ %>
+                   <img src="../images/profile/<%=user.image%>" alt="<%= user.fullname %>">
+             <% } else { %>
+                    <img src="<%= user.image %>" alt="<%= user.fullname %>">
+             <% } %>
+              <form id="profileUpdate">
+                <input type="file" name="profile_picture">
+              </form>
           </div>
           <div class="col-7 details">
-            <span>Ashish Mehra</span>
-            <span class="username">@ashish_D_Dev</span>
-            <p class="lead mt-2">Vestibulum auctor dapibus neque.</p>
+            <span><%= user.fullname %>
+              </span>
+            <span class="username"><%= user.username %></span>
+            <p class="lead mt-2"><%= user.bio %></p>
             <table class="mb-2">
               <tr>
-                <td><b>121</b></td>
-                <td><b>1020</b></td>
+                <td class="followers"><b><%= user.followers.length %></b></td>
+                <td class="followings"><b><%= user.following.length %></b></td>
               </tr>
               <tr>
                 <td>followers</td>
                 <td>following</td>
               </tr>
             </table>
-            <button class="btn-msg"><i class="fa fa-envelope"></i></button>
-            <button class="btn-follow"><i class="fa fa-user-plus"></i> Follow</button>
+             <% if(allow){ %>
+               <button class="btn-upload profilePic"><i class="fa fa-camera"></i> Change Picture</button>
+              <% } %>
+            <% if(!allow){ %>
+            <button class="btn-msg" data-user='{"id":"<%= user._id %>"}'><i class="fa fa-envelope"></i></button>
+            <div id="flw-delg" style="display:inline">
+              <% if(!isFollow){ %>
+                    <button id="follow" class="btn-follow" data-user='{"id":"<%= user._id %>"}'><i class="fa fa-user-plus"></i> Follow</button>
+              <% }else{ %>
+                   <button id="unfollow" class="btn-follow" data-user='{"id":"<%= user._id %>"}'><i class="fa fa-user-times"></i> Unfollow</button>
+              <% } %>
+            </div>
+            <% } %>
           </div>
       </div>
 

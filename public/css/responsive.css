@@ -8,6 +8,12 @@
     font-size: 1.4em;
     margin: 0 10px;
   }
+
+  .profile .bio img{
+    width: 100%;
+    height: 100%;
+  }
+
 }
 
 
@@ -190,6 +196,14 @@
           height: 40px;
         }
 
+       /* .search-load{
+          position: absolute;
+          left: 50%;
+          max-width: 20px;
+          margin-left: -20px;
+          top: 25%;
+        }*/
+
         .sub-panel li>a>b{
           font-size: 1em;
           margin-right: 5px;
@@ -216,6 +230,7 @@
 
         .search-box .sub-panel span{
           color: #a9a9a9;
+          margin-top: -10px;
         }
 
         .search-box .sm-msg{

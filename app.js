@@ -117,7 +117,7 @@ app.use(validator({
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -127,6 +127,7 @@ app.use(flash());
 app.use(function(req, res, next) {
   res.locals.error = req.flash('error');
   res.locals.success = req.flash('success');
+  if(req.user) res.locals.session_id = req.user._id;
   next();
 });
 
@@ -135,12 +136,14 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var search = require('./routes/search');
 var token  = require('./routes/tokens');
+var post  = require('./routes/post');
 
 
 app.use('/', index);
 app.use('/', users);
 app.use('/', search);
 app.use('/', token);
+// app.use('/', post);
 
 
 

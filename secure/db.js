@@ -8,7 +8,6 @@ function findData(modal,object){
 		modal.findOne(object,(err,data) => {
 			if(err)  reject(err);
 			if(data) resolve(data);
-
 			return resolve();
 		});
 

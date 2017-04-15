@@ -1,8 +1,13 @@
 
+var bcrypt = require('bcrypt');
 
 // Express Validator middleware
 
 function reg_valid(req,res,next){
+
+	req.sanitize("fullname").trim();
+	req.sanitize("username").trim();
+	req.sanitize("email").trim();
 
 	req.checkBody({
 
@@ -46,8 +51,8 @@ function reg_valid(req,res,next){
 					 }
 	});
 
-	req.assert('confirm','Password not matced').equals(req.body.password); 
 	req.checkBody('email','Email already exist').isExist_email();
+	req.assert('confirm','Password not matced').equals(req.body.password); 
 
 	req.asyncValidationErrors().then(function(){
 			next();
@@ -85,6 +90,10 @@ function login_valid(req,res,next){
 
 
 function update_Valid(req,res,next){
+
+	req.sanitize("fullname").trim();
+	req.sanitize("username").trim();
+	req.sanitize("bio").trim();
 
 	req.checkBody({
 
@@ -134,6 +143,50 @@ function update_Valid(req,res,next){
 
 
 
+function change_valid(req,res,next){
+
+
+	var userPassword  = req.user.password;
+	var oldPassword = req.body.oldPassword;
+	var newPassword = req.body.newPassword;
+	var confirm = req.body.confirm;
+
+
+	if(userPassword == ""){
+		if(newPassword == "" || confirm == ""){
+			return res.send({msg:"All fields are mandatory.",success:false});
+		}
+		
+	}else{
+
+		if(oldPassword == "" || newPassword == "" || confirm == ""){
+			return res.send({msg:"All fields are mandatory.",success:false});
+		}
+
+		if(!bcrypt.compareSync(oldPassword,userPassword)){
+			return res.send({msg:"Old password is incorrect.",success:false});
+		}
+
+		if(bcrypt.compareSync(newPassword,userPassword)){
+			return res.send({msg:"Old and new Password can't be same.",success:false});
+		}
+	}
+
+		
+		if(newPassword.length < 7){
+			return res.send({msg:"Password must be more than 7 characters.",success:false});
+		}
+
+		if(newPassword !== confirm){
+			return res.send({msg:"Password not matched",success:false});
+		}
+
+
+
+		next();
+
+	}
+
 
 
 /*
@@ -143,9 +196,9 @@ function update_Valid(req,res,next){
 function isAllowed(req,res,next){
 
 	if(req.user){
-		
+
 		if(req.user.status == 0){
-  			res.redirect('/logout');
+			return res.redirect('/logout');
 		}
 
 		next();
@@ -157,7 +210,43 @@ function isAllowed(req,res,next){
 }
 
 function notAllowed(req,res,next){
+	
 	return  (!req.user) ? next():res.redirect('/home');
+}
+
+
+/*
+	Protecting follow
+*/
+
+function isFollowing(req,res,next){
+
+    var isUser = req.user.following.find(following => following == req.body.id);
+
+	if(isUser){
+		 return res.send({msg:'Denied',success:false});
+	}
+
+
+	next();
+
+}
+
+/*
+	Protecting unfollow
+*/
+
+function notFollowing(req,res,next){
+
+    var isUser = req.user.following.find(following => following == req.body.id);
+
+	if(!isUser){
+		 return res.send({msg:'Denied',success:false});
+	}
+
+
+	next();
+
 }
 
 
@@ -170,3 +259,6 @@ module.exports.login_valid = login_valid;
 module.exports.isAllowed = isAllowed;
 module.exports.notAllowed = notAllowed;
 module.exports.update_Valid = update_Valid;
+module.exports.change_valid = change_valid;
+module.exports.isFollowing = isFollowing;
+module.exports.notFollowing = notFollowing;

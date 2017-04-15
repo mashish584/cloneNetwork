@@ -12,7 +12,7 @@ router.get('/activate/:user/:token',function(req,res,next){
 			{$set:{status: "1",accountToken: ""}},
 			(err,user) => {
 				if(err) throw err;
-				if(!user) req.flash('error','Something went wrong.');
+				if(!user) req.flash('error','Token not valid.');
 				if(user) req.flash('success','Account activated successfully.');
 				res.redirect('/');
 

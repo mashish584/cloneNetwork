@@ -6,11 +6,15 @@
               <button id="swipe" class="bg-btn hidden-lg-up swipe_btn" style="font-size:1em; float:left;"><i class="fa fa-align-right swipe_btn"></i></button>
                 <div class="row" style="clear:both;">
                      <div class="col-12 col-md-4" style="text-align:center">
-                        <img src="https://unsplash.it/100/100" alt="" class="img-fluid">
+                      <% if(user.image && !isImage){ %>
+                          <img src="../images/profile/<%=user.image%>" class="ml-2 mb-2" alt="<%= user.fullname %>">
+                      <% } else { %>
+                          <img src="<%= user.image %>" class="ml-2 mb-2" alt="<%= user.fullname %>">
+                      <% } %>
                     </div>
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-md-8">
                         <span><%= user.fullname %></span>
-                        <b>@<%= user.username%></b>
+                        <b><%= user.username%></b>
                         <p class="lead"><%= user.bio %></p>
                     </div>
 
@@ -29,7 +33,7 @@
 
             <div id="menu-panel" class="py-5 index">
                 <a href="#" data-user='{"username":"<%= user.username %>","fullname":"<%= user.fullname %>","email":"<%= user.email%>","bio":"<%= user.bio %>","image":"<%= user.image %>"}' data-get="infoForm" id="loadForm" class="my-3">Profile</a>
-                <a href="#"  data-get="passwordchange" id="loadForm" class="my-3">Account Settings</a>
+                <a href="#" data-user='{"id":"<%= user._id %>"}'  data-get="passwordchange" id="loadForm" class="my-3">Account Settings</a>
             </div>
         </div>
     </div>
