@@ -65,7 +65,7 @@ passport.use(new facebookStrategy({
 				newUser.facebookID = profile.id;
 				newUser.fbToken.push({token:accessToken});
 				newUser.save((err) => {
-					if(err) done(null,false,req.flash('error','Something went wrong.'));
+					if(err) throw err;
 					return done(null,newUser);
 				});
 		}
@@ -88,7 +88,7 @@ passport.use(new googleStrategy({
     clientSecret: get.gSecret,
     callbackURL: "http://localhost:3000/auth/google/callback"
   },
-  function(accessToken, refreshToken, profile, done) {
+  function(req,accessToken, refreshToken, profile, done) {
 	db.findData(User,{$or:[{googleID:profile.id},{email:profile.emails[0].value}]})
 	  .then(function(data){
 	  	if(data) {
@@ -101,7 +101,7 @@ passport.use(new googleStrategy({
 				newUser.googleToken.push({token:accessToken});
 				
 				newUser.save((err) => {
-					if(err) done(null,false,req.flash('error','Something went wrong.'));
+					if(err) throw err;
 					return done(null,newUser);
 				});
 		}

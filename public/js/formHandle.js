@@ -67,8 +67,8 @@ function register_user(e){
            }
             	
 
-            // set as default
-            button.style.opacity = '1';
+      // set as default
+      button.style.opacity = '1';
 			button.removeAttribute("disabled");
   
 
@@ -338,7 +338,7 @@ function findUser(){
               if(!isFollow){
                  html +=    `<button id="follow" data-user='{"id":"${user._id}"}' name="button" class="btn btn-info btn-sm" style="text-transform:uppercase;letter-spacing:1px;position: absolute;top: 17%;right:5%;">Follow</button>`;
               }else{
-                   html +=    `<button id="unfollow" data-user='{"id":"${user._id}"}' name="button" class="btn btn-danger btn-sm" style="text-transform:uppercase;letter-spacing:1px;position: absolute;top: 17%;right:5%;">Unfollow</button>`;
+                 html +=    `<button id="unfollow" data-user='{"id":"${user._id}"}' name="button" class="btn btn-danger btn-sm" style="text-transform:uppercase;letter-spacing:1px;position: absolute;top: 17%;right:5%;">Unfollow</button>`;
               }
             }
 
@@ -418,21 +418,119 @@ function delete_follow(e){
 
 }
 
+function validateFile(){
+
+     var types = ['image/jpeg','image/png'];
+         types  = types.find(type => type == imgDialog.files[0].type);
+      if(!types){
+        return false;
+      }
+  
+    return true;
+}
+
 function savePost(e){
   
   e.preventDefault();
 
-  // $.ajax({
-  //   url: '/savepost',
-  //   type : 'post',
-  //   data : new FormData(this),
-  //   processData : false,
-  //   contentType : false,
-  //   dataType : 'json',
-  //   success : function(response){
-  //     console.log(response);
-  //   }
-  // });
+  let progressBar = document.querySelector('.progress-bar');
+
+  if(imgDialog.files[0]){
+    if(!validateFile()){
+       window.alert("Invalid file type.");
+       return;
+    }
+  }
+
+  $.ajax({
+    url: '/savepost',
+    type : 'post',
+    data : new FormData(this),
+    processData : false,
+    contentType : false,
+    dataType : 'json',
+    success : function(response){
+      if(!response.success){
+        window.alert(response.msg);
+      }
+      if(response.success){
+        var post = response.post;
+        var html = `<div class="row posts my-1">
+                    <div class="col-12 col-md-6 col-lg-5 py-2 post mb-2">
+                        <div class="post-header user-info row">
+                            <div class="col-9 col-md-8">`;
+        if(post.owner.image && post.owner.image.includes("http")){ 
+           html +=   `<img src="${post.owner.image}" alt="${post.owner.fullname}" class="mb-2 rounded">`;
+        } else { 
+           html +=   `<img src="../images/posts/${post.owner.image}" alt="${post.owner.fullname}" class="mb-2 rounded">`
+        } 
+                              
+          html +=  `<span class="ml-2" style="color:rgba(0,0,0,0.5)">${post.owner.fullname}</span>
+                        </div>
+                        <div class="col-3 col-md-4 py-2 mod-center">
+                          <span class="time" style="font-weight:100;">1 day ago</span>
+                        </div>
+                    </div>
+                    <div class="post-body mt-2">
+                      <a href="/post/${post._id}" style="display:block;">
+                        <img src="../images/posts/${post.image}" alt="<%= ${post.owner.fullname} %>" class="img-fluid">
+                      </a>
+                        <p class="lead mt-2">${post.body}</p>
+                    </div>
+                    <div class="post-footer py-2 px-2">
+                        <div class="row">
+                            <div class="col-8">
+                              <button class="like bg-btn fa fa-thumbs-up" data-post="${post._id}"></button>
+                              <span class="countLikes">${post.likes.length}</span>
+                             <button class="comments fa fa-comment bg-btn ml-2"></button>
+                              <span class="countComments">${post.comments.length}</span>
+                            </div>
+                            <div class="col-2 ml-auto" style="text-align:center;">
+                              <button class="btn-set bg-btn" data-post="${post._id}" data-toggle="modal" data-target="#postModal"><i class="fa fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <!-- comment section  -->
+                        <div class="row mt-3">
+                          <div class="comment-list my-2">
+                              <div class="comment my-2">
+                                  <a href="#" class="mr-2">ashish_d_Dev</a> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                              </div>
+                                <a href="#" class="seperate ml-2">View all comments</a>
+                          </div>
+                          <form id="comment-form" class="mt-2">
+                            <input type="text" name="" class="form-control" placeholder="Add a comment...">
+                            <button class="btn-comment fa fa-check" data-post="${post._id}"></button>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+        </div>`;
+
+        document.querySelector('#postsParent').innerHTML =  html + document.querySelector('#postsParent').innerHTML;
+      }
+       postForm.reset();
+       progressBar.style.width = '0';
+       progressBar.textContent = "";
+    },
+    xhr : function(){
+      let xhr = new XMLHttpRequest();
+          xhr.upload.addEventListener('progress', function(e){
+              if(imgDialog.files[0]){
+                if(!validateFile()){
+                  return;
+                }
+              }else{
+                return;
+              }
+              if(e.lengthComputable){
+                var percent = (e.loaded/e.total)*100;
+                progressBar.style.width = `${percent}%`;
+                progressBar.textContent = "Upload Completed";
+              }
+          },false);
+      return xhr;
+    }
+  });
 
 }
 
@@ -465,6 +563,101 @@ function triggerFollow(e){
 }
 
 
+function hitLike(element){
+
+ let id = element.target.dataset.post;
+ let sound = document.querySelector("#thumbs-up");
+     
+
+ element.target.style.transition = "100ms cubic-bezier(0.42, 0.13, 0.47, 1.16)";
+  
+  $.ajax({
+    url: '/toggleLike',
+    type: 'post',
+    data : {id : id},
+    dataType : 'json',
+    success : function(response){
+
+      if(!response.success){
+        window.alert("Something went wrong");
+        return;
+      }
+
+        let countLikes = element.target.parentElement.querySelector('.countLikes');
+
+        // play sound
+        sound.currentTime = 0;
+        sound.play();
+
+        if(response.like) {
+          countLikes.textContent = parseInt(countLikes.textContent) + 1
+          element.target.style.transform = "scale(1.2)";
+          element.target.style.color = "#0275d8";
+        }
+
+        if(!response.like) {
+          countLikes.textContent = parseInt(countLikes.textContent) - 1;
+          element.target.style.transform = "scale(1.2)";
+          element.target.style.color = "#222";
+          
+        }
+        setTimeout(() => {
+            element.target.style.transform = "scale(1)";
+        },150);
+
+    },
+    error:function(){
+      window.alert("Something went wrong");
+      return;
+    }
+  });
+
+}
+
+function saveComment(element){
+
+   let text = element.target.parentElement.querySelector('input');
+   let id = element.target.dataset.post;
+
+    $.ajax({
+    url: '/saveComment',
+    type: 'post',
+    data : {id : id,text:text.value.trim()},
+    dataType : 'json',
+    success : function(response){
+        
+        if(!response.success){
+          if(response.msg){
+              window.alert(response.msg);
+          }else{
+             window.alert("Something went wrong.");
+          }
+          return;
+        }    
+
+         //generate content
+          let commentList = text.parentElement.parentElement.querySelector('.comment-list');
+           if(!singlePost){
+              commentList.innerHTML =  `<div class="comment my-2"><a href="/profile/${response._id}" class="mr-2">${response.fullname}</a> ${text.value.trim()}</div>`;
+           }else{
+               commentList.innerHTML =  commentList.innerHTML + `<div class="comment my-2"><a href="/profile/${response._id}" class="mr-2">${response.fullname}</a> ${text.value.trim()}</div>`;
+           }
+        
+        //make input empty
+          text.value = "";
+
+    },
+
+    error:function(){
+      window.alert("Something went wrong");
+      return;
+    }
+
+  });
+     
+}
+
+
 if(subSearch) subSearch.addEventListener('click', e => triggerFollow(e));
 if(flwParent)  flwParent.addEventListener('click',e => triggerFollow(e));
 
@@ -472,6 +665,31 @@ if(flwParent)  flwParent.addEventListener('click',e => triggerFollow(e));
 // post form
 
 if(postForm) postForm.addEventListener('submit', savePost);
+
+function trigger(e){
+   //target like
+   if(e.target.classList.contains('fa-thumbs-up')) hitLike(e);
+   // target comment
+   if(e.target.classList.contains('btn-comment')) {
+      e.preventDefault();
+      saveComment(e);
+    }
+}
+
+
+//home post
+if(posts) posts.addEventListener('click', (e) => {
+
+    trigger(e);  
+   
+});
+
+//single post
+if(singlePost) singlePost.addEventListener('click', (e) => {
+
+  trigger(e);  
+   
+});
 
 
 

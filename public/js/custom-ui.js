@@ -20,7 +20,9 @@ const bell = document.querySelector('.btn-notification'),
  uploadInput = document.querySelector('[name="uploadPost"]'),
  cameraBtn = document.querySelector('.profilePic'),
  imgDialog = document.querySelector('input[type="file"]'),
- subSearch = document.querySelector('.sub-search');;
+ subSearch = document.querySelector('.sub-search'),
+ posts = document.querySelector('#postsParent'),
+ singlePost = document.querySelector('.single-post');
 
 
 let panel_on = false;
@@ -186,6 +188,10 @@ if(uploadInput) uploadInput.addEventListener('click', () => {
   imgDialog.click();
 
 });
+
+
+
+
 
 
 

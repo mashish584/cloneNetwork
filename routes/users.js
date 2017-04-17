@@ -34,6 +34,7 @@ var upload = multer({
 });
 
 var User = require('../models/user');
+var Post = require('../models/post');
 var db  = require('../secure/db');
 var middleware = require('../middlewares/middleware');
 
@@ -41,7 +42,10 @@ var middleware = require('../middlewares/middleware');
 
 /* GET users homepage. */
 router.get('/home',middleware.isAllowed,function(req, res, next) {
-  res.render('home',{title:"Community Network",header:true,navbar:true,user:req.user,isImage:req.user.image.includes("http")});
+  Post.find((err,post)=>{
+  	  if(err) next(err);
+  	  res.render('home',{title:"Community Network",header:true,navbar:true,user:req.user,isImage:req.user.image.includes("http"),posts:post,single:true});
+  }).sort({'date': -1});
 });
 
 /* GET user profilepage. */

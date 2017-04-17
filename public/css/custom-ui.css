@@ -35,6 +35,8 @@ button:focus{
 }
 
 .progress-bar{
+  width: 0;
+  height: 20px;
   background: #616c76;
 }
 
@@ -64,8 +66,9 @@ li{
 
 .modal-body form{
   background: transparent;
-  box-shadow:
 }
+
+
 
 .site-logo {
   cursor: default;
@@ -448,8 +451,8 @@ a.active{
 /*post thumbnails - profile*/
 .t-header{
   background: #fff;
-  border-top: 1px solid #f5f5f5;
-  border-bottom: 1px solid #f5f5f5;
+  border-top: 1px solid #dcdcdc;
+  border-bottom: 1px solid #dcdcdc;
 }
 
 .t-header>span{
@@ -464,6 +467,9 @@ a.active{
 
 .post-thumbnail img{
     transition: 400ms cubic-bezier(0.14, 0.63, 0.56, 0.79);
+    width: 100%;
+    height: 200px;
+    max-height: 200px;
 }
 
 .post-thumbnail a{
@@ -761,4 +767,16 @@ span.lead{
   border-radius: 0;
 }
 
+
+/*  Post page */
+
+.single-post .comment-list{
+  width: 100%;
+}
+
+.single-post .comment{
+    display: block;
+    border-bottom: 1px solid #dcdcdc;
+    padding: 5px;
+}
 

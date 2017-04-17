@@ -21,7 +21,7 @@ var userSchema = new Schema({
 	googleToken  : Array,
 	followers    : Array,
 	following    : Array,
-	likes        : Number,
+	likes        : {type:Number,default:0},
 	posts        : [{
 					  post : String,
 					  body : {type:String,trim:true},

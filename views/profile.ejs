@@ -47,60 +47,28 @@
       </div>
 
       <div class="row t-header py-2">
-          <span class="mx-3 mr-auto"><i class="fa fa-clone mr-1"></i> <b>22</b> posts</span>
-          <span class="mr-5 total-likes"><i class="fa fa-thumbs-o-up mr-1"></i> <b>200</b> liked</span>
+          <span class="mx-3 mr-auto"><i class="fa fa-clone mr-1"></i> <b><%= user.posts.length %></b> posts</span>
+          <span class="mr-5 total-likes"><i class="fa fa-thumbs-o-up mr-1"></i> <b><%= user.likes %></b> liked</span>
       </div>
 
       <div class="row mb-3 profile-posts">
-          <div class="post-thumbnail col-4">
+       <% if(user.posts.length > 0){ %>
+        <% for(var i=0; i<user.posts.length; i++){ %>
+           <div class="post-thumbnail col-4">
               <a href="#">
-                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
+                <img src="../images/posts/<%=user.posts[i].image%>" alt="" class="img-fluid">
               </a>
           </div>
-          <div class="post-thumbnail col-4">
-              <a href="#">
-                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
-              </a>
-          </div>
-          <div class="post-thumbnail col-4">
-              <a href="#">
-                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
-              </a>
-          </div>
-          <div class="post-thumbnail col-4">
-              <a href="#">
-                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
-              </a>
-          </div>
-          <div class="post-thumbnail col-4">
-              <a href="#">
-                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
-              </a>
-          </div>
-          <div class="post-thumbnail col-4">
-              <a href="#">
-                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
-              </a>
-          </div>
-          <div class="post-thumbnail col-4">
-              <a href="#">
-                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
-              </a>
-          </div>
-          <div class="post-thumbnail col-4">
-              <a href="#">
-                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
-              </a>
-          </div>
-          <div class="post-thumbnail col-4">
-              <a href="#">
-                <img src="https://unsplash.it/400/400" alt="" class="img-fluid">
-              </a>
-          </div>
+        <% } %>        
+      <% }else{ %>
+            <div class="col-12 mx-auto py-5 px-5" style="height:300px;">
+                <h1 class="display-4">No post found !</h1>
+            </div>
+      <% } %>
           <!-- Load More Button -->
-          <div class="col-6 mx-auto my-4">
+         <!--  <div class="col-6 mx-auto my-4">
               <button class="btn-load">Loading <i class="fa fa-spinner"></i></button>
-          </div>
+          </div> -->
       </div>
 
     </div>

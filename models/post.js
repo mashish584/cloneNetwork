@@ -6,13 +6,13 @@ var postSchema = new Schema({
 	image : {type:String,trim:true},
 	likes : Array,
 	comments : [{
-				 user : { 
-				 			userID : String,
-				 			fullname : String,
-				 			username : String
-				 		},
+				 user : Object,
+				 fullname : String,
+				 username : String,
 				 comment : String
-			   }]	
+			   }],
+	date   : {type:Date,default:Date.now()},
+	owner  : Object
 });
 
 var Post = mongoose.model('Post',postSchema);

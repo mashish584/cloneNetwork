@@ -14,6 +14,15 @@
     height: 100%;
   }
 
+  .post-thumbnail{
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .post-thumbnail img{
+    max-height: 150px;
+  }
+
 }
 
 
@@ -284,6 +293,11 @@
       .profile-posts{
         padding: 0.5%;
         background: #fff;
+      }
+
+      .post-thumbnail img{
+         height: 250px;
+         max-height: 250px;
       }
 
 }

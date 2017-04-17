@@ -143,7 +143,7 @@ app.use('/', index);
 app.use('/', users);
 app.use('/', search);
 app.use('/', token);
-// app.use('/', post);
+app.use('/', post);
 
 
 
