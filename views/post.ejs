@@ -1,0 +1,10 @@
+<% layout('layout/layout') %>
+
+  <div class="container single-post">
+       <% for(var i=0;i<posts.length;i++){ %>
+              <% include partials/includes/posts %>
+      <% } %>
+  </div>
+
+   <!-- Panels  -->
+ <% include partials/panels/panel %>

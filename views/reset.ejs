@@ -1,0 +1,30 @@
+<% layout('layout/layout') %>
+
+<div class="container user-form" style="height:100%">
+	<div class="col-12 col-lg-4 mx-auto mt-5">
+		 <span class="site-logo my-5">Community Network</span>
+		<form method="post">
+		 
+				 <% if(error.length>0) { %>
+		                    <div class="alert alert-danger" role="alert">
+		                      <%=error%>
+		                    </div>
+		                    
+		                  <% } %>
+			      <% if(success.length>0) { %>
+			        <div class="alert alert-success" role="alert">
+			          <%=success%>
+			        </div>
+			            
+			      <% } %>
+
+			<div class="form-group">
+				<input type="password" name="newPassword" value="" placeholder="New Password" class="form-control">
+			</div>
+			<div class="form-group">
+            	<input type="password" name="confirmPassword" value="" placeholder="Confirm Password" class="form-control">
+            </div>
+            <button type="submit" name="submit">RESET</button>         
+		</form>
+	</div>
+</div>

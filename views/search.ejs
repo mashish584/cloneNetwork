@@ -1,0 +1,45 @@
+<% layout('layout/layout') %>
+
+    <nav class="mobile-nav py-2 hidden-md-up">
+        <a href="/" class="active"><i class="fa fa-home"></i></a>
+        <a href="/profile/<%= user._id %>"><i class="fa fa-user"></i></a>
+        <a href="#" class="mx-4 search"><i class="fa fa-search"></i></a>
+        <a href="#"><i class="fa fa-inbox"></i></a>
+        <a href="#" class="btn-settings"><i class="fa fa-cog"></i></a>
+    </nav>
+
+    <div id="search" class="container py-5">
+
+      <span class="search-box">
+        <input type="hidden" name="sess_id" value="<%= session_id %>">
+        <input type="search" name="" value="" class="form-control searchUser" placeholder="Search" class="search">
+        <i class="fa fa-search"></i>
+      </span>
+
+      <div class="sub-search mt-4">
+       
+          <!-- Search results -->   
+
+      </div>
+
+    </div>
+
+    <!-- Panels  -->
+
+    <div id="panel-settings" class="panel px-2 pt-4">
+        <li>
+          <a href="#">
+              Account Settings
+              <i class="fa fa-angle-right py-2 hidden-md-up"></i>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+              Sign Out
+              <i class="fa fa-angle-right py-2 hidden-md-up"></i>
+          </a>
+        </li>
+    </div>
+
+
+

@@ -1,0 +1,33 @@
+ <% layout('layout/layout') %>
+
+  <div class="container chatBox">
+        <div class="swipe-form col-12 col-lg-6 mt-5 mx-auto">
+            <div id="chatForm" class="header">
+              <p class="lead"> <button id="swipeChat" class="bg-btn hidden-lg-up swipe_btn" style="font-size:1em; float:left;margin-right:2%;color:#fff;"><i class="fa fa-align-right swipe_btn"></i></button><img src="https://unsplash.it/50/50" alt=""> <b>Select user</b></p>  
+              <div id="textArea"></div>    
+            </div>
+            <div class="chatForm">
+               <input type="text" name="textMsg" class="form-control" placeholder="Send your message">
+               <button class="btn-send fa fa-send" data-sender="<%= session_id %>"></button>
+            </div>
+            <div id="menu-panel" class="py-5 index user-list" style="overflow: auto;padding-bottom: 20px;">
+              <p class="lead">Chat Box</p>
+              <% if(user.length > 0) {%>
+                <% for(var i=0;i<user.length; i++){ %>
+                      <li data-sender=<%= session_id %> data-receiver=<%= user[i]._id %>>
+                          <% if(user[i].image && !user[i].image.includes("http")){ %>
+                               <img src="../images/profile/<%=user[i].image%>" alt="<%= user[i].fullname %>">
+                           <% } else { %>
+                                  <img src="<%= user[i].image %>" alt="<%= user[i].fullname %>">
+                           <% } %>
+                         <span><%= user[i].fullname %></span>
+                      </li>
+                <%}%>
+            <%}%>
+            </div>
+        </div>
+    </div>
+
+
+     <!-- Panels  -->
+      <% include partials/panels/panel %>

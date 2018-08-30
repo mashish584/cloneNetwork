@@ -1,0 +1,435 @@
+
+/*===========================================/
+/   Small devices (landscape phones, 576px and down)
+/=========================================*/
+@media (max-width: 390px) {
+
+  .mobile-nav a{
+    font-size: 1.4em;
+    margin: 0 10px;
+  }
+
+  .profile .bio img{
+    width: 100%;
+    height: 100%;
+  }
+
+  .post-thumbnail{
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .post-thumbnail img{
+    max-height: 150px;
+  }
+
+}
+
+
+
+
+/*===========================================/
+/   Medium devices (tablets, 768px and up)
+/=========================================*/
+
+
+@media (min-width: 768px) {
+
+      /* Login or Signup Style */
+
+      .user-form{
+        background: #fff;
+        height: auto;
+      }
+
+      .user-form .site-logo,
+      .user-form .lead{
+        color: #222;
+      }
+
+      .user-form form{
+        width: 50%;
+        margin: 2% auto;
+      }
+
+      .user-form form .form-control:focus{
+        border-color : rgba(0,0,0,.15);
+      }
+
+      .user-form form button{
+        background: #2196f3;
+      }
+
+      .user-form a,
+      .user-form .or{
+        color: #222;
+      }
+
+      .user-form .or:after,
+      .user-form .or:before{
+        border-color: rgba(0,0,0,0.1);
+        width: 300%;
+      }
+
+      .social-options{
+        margin-top:2%;
+      }
+
+      .social-options button{
+        width: 150px;
+        background: #3f51b5;
+      }
+
+      .social-options button:nth-of-type(even){
+        background: #f44336;
+      }
+
+      .user-form .btn-jump{
+        width: 40%;
+        margin: 4% auto;
+        background: #222;
+        color: #fff;
+        border: 1px solid rgba(0,0,0,0.5);
+      }
+
+
+        /* Homepage Style */
+
+        #post-form,
+        .profile .bio{
+          margin: 50px auto 15px;
+        }
+
+        .posts .post{
+          margin: 10px auto;
+        }
+
+        header .links{
+          margin-left: 10%;
+        }
+
+        header .links>a,
+        header .links>button,
+        header .search-box{
+          margin: auto 2%;
+          color: #222;
+          position: relative;
+        }
+
+        header .links>button{
+          background: none;
+          border: none;
+        }
+
+        .lg-setting{
+          position: relative;
+        }
+
+        .lg-setting > .sub-panel{
+          width: 200px;
+          left: -150px;
+          text-align: left;
+          font-size: 0.6em;
+          letter-spacing: 1px;
+        }
+
+        .lg-setting > .sub-panel > a{
+          display: block;
+          padding: 5px;
+        }
+
+        .lg-setting > .sub-panel:after,
+        .lg-setting > .sub-panel:before{
+          right: 10%;
+        }
+
+        .sub-panel{
+          position: absolute;
+          background: #fff;
+          border-radius: 5px;
+          width: 400px;
+          padding: 10px;
+          top: 45px;
+          left: -300px;
+          box-shadow: 0 0 5px rgba(0,0,0,0.1);
+          display: none;
+        }
+
+        .sh-panel{
+          display: block;
+        }
+
+        .sub-panel:after,
+        .sub-panel:before{
+          position: absolute;
+          content: "";
+          border: 10px solid transparent;
+          border-bottom-color: #fff;
+          top: -20px;
+          right: 70px;
+        }
+
+
+        .sub-panel:before{
+          border-bottom-color: rgba(0,0,0,0.5);
+        }
+
+        .sub-panel ul{
+          max-height: 400px;
+          overflow: auto;
+          padding: 10px 0;
+          margin: 0;
+        }
+
+        .sub-panel li{
+          margin: 2px auto;
+          padding: 2%;
+          border-bottom: 1px solid #dcdcdc;
+        }
+
+        .sub-panel li>a{
+          text-align: left;
+          display: block;
+          font-size: 0.6em;
+          font-family: 'lato';
+        }
+
+        .sub-panel img{
+          width: 40px;
+          height: 40px;
+        }
+
+        .sub-panel img:first-child{
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+        }
+
+       /* .search-load{
+          position: absolute;
+          left: 50%;
+          max-width: 20px;
+          margin-left: -20px;
+          top: 25%;
+        }*/
+
+        .sub-panel li>a>b{
+          font-size: 1em;
+          margin-right: 5px;
+        }
+
+        header .links>span{
+          display: inline-block;
+        }
+
+        header .search-box{
+          position: relative;
+          margin-right: 5%;
+        }
+
+        .search-box .sub-panel{
+          left: -20%;
+          top: 40px;
+        }
+
+        .search-box .sub-panel b{
+          font-size: 1.2em;
+          letter-spacing: 1px;
+        }
+
+        .search-box .sub-panel span{
+          color: #a9a9a9;
+          margin-top: -10px;
+        }
+
+        .search-box .sm-msg{
+          display: block;
+          margin-left: 60px;
+        }
+
+        .search-box .sub-panel:after,
+        .search-box .sub-panel:before{
+          right: 50%;
+        }
+
+        header .form-control{
+            width: 200px;
+            max-height: 28px;
+            padding: .2rem .75rem;
+            background: #f5f5f5;
+            border-radius: 0;
+            padding-right: 20px;
+        }
+
+        header .form-control:focus{
+          border: 1px solid #dcdcdc;
+          background: #f5f5f5;
+        }
+
+        .search-box .form-control:focus ~ .sub-panel{
+          display: block;
+        }
+
+        .search-box>i{
+          position: absolute;
+          top: 30%;
+          right: 5%;
+          font-size: 0.5em;
+        }
+
+      /* Profile Page Styles */
+
+      .profile .bio img{
+        max-width: 200px;
+        height: 200px;
+      }
+
+      .bio,
+      .t-header,
+      .profile-posts{
+        margin: auto 0;
+      }
+
+      .profile-posts{
+        padding: 0.5%;
+        background: #fff;
+      }
+
+      .post-thumbnail img{
+         height: 250px;
+         max-height: 250px;
+      }
+
+}
+
+/*=============================================/
+/ Large devices (desktops, 992px and up)
+/============================================*/
+
+@media (min-width: 992px) {
+
+    #updateForm .btn-update{
+        float: left;
+    }
+
+
+    /* Login or Signup Style */
+
+    .login.user-form{
+      height: 100%;
+    }
+
+    .user-form form,
+    .social-options{
+      width: 100%;
+      padding: 7% 10%;
+      background: #fff;
+      box-shadow: 0 0 4px 1px rgba(0,0,0,0.1);
+    }
+
+    .social-options{
+      margin-top: 48px;
+      margin-bottom: 48px;
+    }
+
+    .social-options span{
+      display: block;
+      margin-top: 2%;
+      margin-bottom: 5%;
+    }
+
+    .user-form .btn-jump{
+      width: 80%;
+    }
+
+    /* Homepage Style */
+
+    header .site-logo{
+      margin-right: 5%;
+    }
+
+    header .links{
+      padding: 5px;
+    }
+
+    header .form-control{
+      width: 300px;
+    }
+
+      /* Profile Page Styles */
+
+      .profile .bio{
+        background: #fff;
+        margin-bottom: 0;
+        padding: 7% 2%;
+      }
+
+      .bio,
+      .t-header,
+      .profile-posts{
+        width: 70%;
+        margin: 0 auto;
+      }
+
+
+
+      .bio img{
+        border-radius: 50%;
+        box-shadow: 0 0 10px 2px rgba(0,0,0,0.2);
+        margin:auto auto;
+      }
+
+      .profile .details>span{
+        font-size: 1.85em;
+        letter-spacing: 1.2px;
+      }
+
+      .details>span:nth-child(2){
+        font-size: 1em;
+        letter-spacing: 1.2px;
+      }
+
+      .post-thumbnail:hover img{
+        -webkit-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+        transform: scale(1.2);
+      }
+
+      .details .btn-follow{
+        width: 40%;
+      }
+
+      /*settings form*/
+
+      /* Update Form Styling */
+
+      #updateForm{
+        text-align: left;
+      }
+
+      .swipe-form{
+        overflow: visible;
+      }
+
+      #menu-panel{
+        width: 40%;
+        left: -40%;
+      }
+
+      #updateForm img{
+        border-radius: 0;
+      }
+
+      #updateForm .btn-save{
+        width: 30%;
+        border-radius: 0;
+      }
+
+      .index{
+        z-index: 1;
+      }
+
+
+
+
+}

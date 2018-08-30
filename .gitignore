@@ -1,0 +1,3 @@
+node_modules
+secure/smtpCred.js
+public/images/**/*

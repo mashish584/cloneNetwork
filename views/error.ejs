@@ -1,0 +1,14 @@
+<% layout('layout/layout') %>
+
+ <div id="errorPage">
+   <div class="move">
+      <h1 class="display-1">404</h1>
+      <span>Not found</span>
+      <p class="lead">(See the console log for errors)</p>
+    </div>
+      <a href="/home">Back to home</a>
+ </div>
+
+ <script>
+ 	console.log("Error : <%= message %>");
+ </script>

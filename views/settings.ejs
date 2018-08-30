@@ -1,0 +1,44 @@
+ <% layout('layout/layout') %>
+
+    <div class="container">
+        <div class="swipe-form col-12 col-lg-6 mt-5 mx-auto">
+            <form id="updateForm" class="py-3" enctype="multipart/form-data">
+              <button id="swipe" class="bg-btn hidden-lg-up swipe_btn" style="font-size:1em; float:left;"><i class="fa fa-align-right swipe_btn"></i></button>
+                <div class="row" style="clear:both;">
+                     <div class="col-12 col-md-4" style="text-align:center">
+                      <% if(user.image && !isImage){ %>
+                          <img src="../images/profile/<%=user.image%>" class="ml-2 mb-2" alt="<%= user.fullname %>">
+                      <% } else { %>
+                          <img src="<%= user.image %>" class="ml-2 mb-2" alt="<%= user.fullname %>">
+                      <% } %>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <span><%= user.fullname %></span>
+                        <b><%= user.username%></b>
+                        <p class="lead"><%= user.bio %></p>
+                    </div>
+
+                    <div class="col-11 col-md-12 mx-auto">
+                        <div id="flash" class="my-2"></div>
+                        <input type="text" name="fullname" value="<%= user.fullname %>" placeholder="Your name" class="form-control">
+
+                        <input type="text" name="username" value="<%= user.username %>" placeholder="Your Username" class="form-control">
+
+                        <textarea name="bio" class="form-control" maxlength="120" placeholder="About yourself"><%= user.bio %></textarea>
+
+                        <button type="button" class="bg-btn btn-save" name="button">Save</button>
+                    </div>
+                </div>
+            </form>
+
+            <div id="menu-panel" class="py-5 index">
+                <a href="#" data-user='{"username":"<%= user.username %>","fullname":"<%= user.fullname %>","email":"<%= user.email%>","bio":"<%= user.bio %>","image":"<%= user.image %>"}' data-get="infoForm" id="loadForm" class="my-3">Profile</a>
+                <a href="#" data-user='{"id":"<%= user._id %>"}'  data-get="passwordchange" id="loadForm" class="my-3">Account Settings</a>
+            </div>
+        </div>
+    </div>
+
+
+
+     <!-- Panels  -->
+      <% include partials/panels/panel %>

@@ -1,0 +1,78 @@
+<% layout('layout/layout') %>
+
+
+    <div class="container profile">
+
+      <div class="row bio py-3">
+          <div class="col-5 ">
+
+             <!-- <% if(user.image && !user.image.includes("http")){ %>
+
+             <% } else { %>
+                    <img src="<%= user.image %>" alt="<%= user.fullname %>">
+             <% } %> -->
+             <img src="<%=user.image%>" alt="<%= user.fullname %>">
+              <form id="profileUpdate">
+                <input type="file" name="profile_picture">
+              </form>
+          </div>
+          <div class="col-7 details">
+            <span><%= user.fullname %>
+              </span>
+            <span class="username"><%= user.username %></span>
+            <p class="lead mt-2"><%= user.bio %></p>
+            <table class="mb-2">
+              <tr>
+                <td class="followers"><b><%= user.followers.length %></b></td>
+                <td class="followings"><b><%= user.following.length %></b></td>
+              </tr>
+              <tr>
+                <td>followers</td>
+                <td>following</td>
+              </tr>
+            </table>
+             <% if(allow){ %>
+               <button class="btn-upload profilePic"><i class="fa fa-camera"></i> Change Picture</button>
+              <% } %>
+            <% if(!allow){ %>
+            <a href="/messages" class="btn-msg" style="display: inline-block;"><i class="fa fa-envelope"></i></a>
+            <div id="flw-delg" style="display:inline">
+              <% if(!isFollow){ %>
+                    <button id="follow" class="btn-follow" data-user='{"id":"<%= user._id %>"}'><i class="fa fa-user-plus"></i> Follow</button>
+              <% }else{ %>
+                   <button id="unfollow" class="btn-follow" data-user='{"id":"<%= user._id %>"}'><i class="fa fa-user-times"></i> Unfollow</button>
+              <% } %>
+            </div>
+            <% } %>
+          </div>
+      </div>
+
+      <div class="row t-header py-2">
+          <span class="mx-3 mr-auto"><i class="fa fa-clone mr-1"></i> <b><%= user.posts.length %></b> posts</span>
+          <span class="mr-5 total-likes"><i class="fa fa-thumbs-o-up mr-1"></i> <b><%= user.likes %></b> liked</span>
+      </div>
+
+      <div class="row mb-3 profile-posts">
+       <% if(user.posts.length > 0){ %>
+        <% for(var i=0; i<user.posts.length; i++){ %>
+           <div class="post-thumbnail col-4">
+              <a href="#">
+                <img src="<%=user.posts[i].image%>" alt="" class="img-fluid">
+              </a>
+          </div>
+        <% } %>
+      <% }else{ %>
+            <div class="col-12 mx-auto py-5 px-5" style="height:300px;">
+                <h1 class="display-4">No post found !</h1>
+            </div>
+      <% } %>
+          <!-- Load More Button -->
+         <!--  <div class="col-6 mx-auto my-4">
+              <button class="btn-load">Loading <i class="fa fa-spinner"></i></button>
+          </div> -->
+      </div>
+
+    </div>
+
+   <!-- Panels  -->
+      <% include partials/panels/panel %>
